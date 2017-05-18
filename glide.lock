@@ -1,21 +1,30 @@
 hash: de251fd2802d409c824a8d16d45590f27f6202be16d69f1c6d61649a6d8862ce
-updated: 2017-05-16T16:09:14.12589579-04:00
+updated: 2017-05-18T12:38:01.091137332-04:00
 imports:
-- name: github.com/graphql-go/graphql
-  version: fe52096df4714b0c66bd7921ade11c976acb51a2
+- name: github.com/neelance/graphql-go
+  version: 5c26f320e3a296c653c6b3763280883cf4e4b416
   subpackages:
-  - gqlerrors
-  - language/ast
-  - language/kinds
-  - language/lexer
-  - language/location
-  - language/parser
-  - language/printer
-  - language/source
-  - language/typeInfo
-  - language/visitor
+  - errors
+  - example/starwars
+  - internal/common
+  - internal/exec
+  - internal/exec/resolvable
+  - internal/exec/selected
+  - internal/lexer
+  - internal/query
+  - internal/schema
+  - internal/validation
+  - introspection
+  - log
+  - relay
+  - trace
+- name: github.com/opentracing/opentracing-go
+  version: eaaf4e1eeb7a5373b38e70901270c83577dc6fb9
+  subpackages:
+  - ext
+  - log
 - name: golang.org/x/net
-  version: 34057069f4ab13dc4433c68d368737ebeafcccdc
+  version: 513929065c19401a1c7b76ecd942f9f86a0c061b
   subpackages:
   - context
 testImports: []

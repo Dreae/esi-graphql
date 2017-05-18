@@ -1,103 +1,77 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 
-	"github.com/graphql-go/graphql"
+	"github.com/dreae/esi-graphql/resolvers"
+	"github.com/neelance/graphql-go"
+	"github.com/neelance/graphql-go/relay"
 )
 
-type Dogma struct {
-	AttributeID  int    `json:"attribute_id"`
-	DefaultValue int    `json:"default_value"`
-	Description  string `json:"description"`
-	DisplayName  string `json:"display_name"`
-	HighIsGood   bool   `json:"high_is_good"`
-	IconID       int    `json:"icon_id"`
-	Name         string `json:"name"`
-	Published    bool   `json:"published"`
-	Stackable    bool   `json:"stackable"`
-	UnitID       int    `json:"unit_id"`
-}
+var schema *graphql.Schema
 
-func initGraphql() (graphql.Schema, error) {
-	dogmaType := graphql.NewObject(
-		graphql.ObjectConfig{
-			Name: "Dogma",
-			// If only there were macros that could do this *grumble grumble*
-			Fields: graphql.Fields{
-				"AttributeID": &graphql.Field{
-					Type: graphql.Int,
-				},
-				"DefaultValue": &graphql.Field{
-					Type: graphql.Int,
-				},
-				"Description": &graphql.Field{
-					Type: graphql.String,
-				},
-				"DisplayName": &graphql.Field{
-					Type: graphql.String,
-				},
-				"HighIsGood": &graphql.Field{
-					Type: graphql.Boolean,
-				},
-				"IconID": &graphql.Field{
-					Type: graphql.Int,
-				},
-				"Name": &graphql.Field{
-					Type: graphql.String,
-				},
-				"Published": &graphql.Field{
-					Type: graphql.Boolean,
-				},
-				"Stackable": &graphql.Field{
-					Type: graphql.Boolean,
-				},
-				"UnitID": &graphql.Field{
-					Type: graphql.Int,
-				},
-			},
-		})
+func init() {
+	var err error
+	schemaFile, err := ioutil.ReadFile("schema.gql")
+	if err != nil {
+		panic(err)
+	}
 
-	queryType := graphql.NewObject(
-		graphql.ObjectConfig{
-			Name: "Query",
-			Fields: graphql.Fields{
-				"dogma": &graphql.Field{
-					Type: dogmaType,
-					Args: graphql.FieldConfigArgument{
-						"AttributeID": &graphql.ArgumentConfig{
-							Type: graphql.Int,
-						},
-					},
-					Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-						id := p.Args["AttributeID"]
-						resp, _ := http.Get(fmt.Sprintf("https://esi.tech.ccp.is/latest/dogma/attributes/%d/?datasource=tranquility", id))
-						var dogma Dogma
-
-						json.NewDecoder(resp.Body).Decode(&dogma)
-
-						return dogma, nil
-					},
-				},
-			},
-		})
-
-	return graphql.NewSchema(graphql.SchemaConfig{
-		Query: queryType,
-	})
+	schema, err = graphql.ParseSchema(string(schemaFile), &resolvers.Resolver{})
+	if err != nil {
+		panic(err)
+	}
 }
 
 func main() {
-	schema, _ := initGraphql()
-	http.HandleFunc("/query", func(w http.ResponseWriter, r *http.Request) {
-		result := graphql.Do(graphql.Params{
-			Schema:        schema,
-			RequestString: r.URL.Query()["query"][0],
-		})
-		json.NewEncoder(w).Encode(result)
-	})
+	http.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Write(page)
+	}))
 
-	http.ListenAndServe(":8080", http.DefaultServeMux)
+	http.Handle("/query", &relay.Handler{Schema: schema})
+
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
+
+var page = []byte(`
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.7.8/graphiql.css" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.7.8/graphiql.js"></script>
+	</head>
+	<body style="width: 100%; height: 100%; margin: 0; overflow: hidden;">
+		<div id="graphiql" style="height: 100vh;">Loading...</div>
+		<script>
+			function graphQLFetcher(graphQLParams) {
+				graphQLParams.variables = graphQLParams.variables ? JSON.parse(graphQLParams.variables) : null;
+				return fetch("/query", {
+					method: "post",
+					body: JSON.stringify(graphQLParams),
+					credentials: "include",
+					headers: {
+						"X-Foo-Bar": "Baz"
+					},
+				}).then(function (response) {
+					return response.text();
+				}).then(function (responseBody) {
+					try {
+						return JSON.parse(responseBody);
+					} catch (error) {
+						return responseBody;
+					}
+				});
+			}
+			ReactDOM.render(
+				React.createElement(GraphiQL, {fetcher: graphQLFetcher}),
+				document.getElementById("graphiql")
+			);
+		</script>
+	</body>
+</html>
+`)

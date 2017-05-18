@@ -1,0 +1,43 @@
+schema {
+	query: Query
+}
+
+type Query {
+  DogmaAttribute(AttributeID: Int!): DogmaAttribute!
+	DogmaAttributes: [DogmaAttributeNode]
+	Type(TypeID: Int!): Type!
+}
+
+type DogmaAttribute {
+  AttributeID: Int
+	DefaultValue: Int
+	Description: String
+	DisplayName: String
+	HighIsGood: Boolean
+	IconID: Int
+	Name: String
+	Published: Boolean
+	Stackable: Boolean
+	UnitID: Int
+}
+
+type DogmaAttributeNode {
+	AttributeID: Int
+	Value: Float
+	Attribute: DogmaAttribute
+}
+
+type Type {
+	TypeID: Int
+	Name: String
+	Description: String
+	Published: Boolean
+	GroupID: Int
+	Radius: Float
+	Volume: Float
+	Capacity: Float
+	PortionSize: Int
+	Mass: Float
+	GraphicID: Int
+	DogmaAttributes: [DogmaAttributeNode]
+}
