@@ -1,27 +1,25 @@
-package universe
+package resolvers
 
 import (
 	"fmt"
 	"net/http"
 
 	"encoding/json"
-
-	"github.com/dreae/esi-graphql/resolvers/dogma"
 )
 
 type EVEType struct {
-	TypeID          int32                      `json:"type_id"`
-	Name            string                     `json:"name"`
-	Description     string                     `json:"description"`
-	Published       bool                       `json:"published"`
-	GroupID         int32                      `json:"group_id"`
-	Radius          float64                    `json:"radius"`
-	Volume          float64                    `json:"volume"`
-	Capacity        float64                    `json:"capacity"`
-	PortionSize     int32                      `json:"portion_size"`
-	Mass            float64                    `json:"mass"`
-	GraphicID       int32                      `json:"graphic_id"`
-	DogmaAttributes []dogma.DogmaAttributeNode `json:"dogma_attributes"`
+	TypeID          int32                `json:"type_id"`
+	Name            string               `json:"name"`
+	Description     string               `json:"description"`
+	Published       bool                 `json:"published"`
+	GroupID         int32                `json:"group_id"`
+	Radius          float64              `json:"radius"`
+	Volume          float64              `json:"volume"`
+	Capacity        float64              `json:"capacity"`
+	PortionSize     int32                `json:"portion_size"`
+	Mass            float64              `json:"mass"`
+	GraphicID       int32                `json:"graphic_id"`
+	DogmaAttributes []DogmaAttributeNode `json:"dogma_attributes"`
 }
 
 type EVETypeResolver struct {
@@ -72,10 +70,10 @@ func (t *EVETypeResolver) GraphicID() *int32 {
 	return &t.EveType.GraphicID
 }
 
-func (t *EVETypeResolver) DogmaAttributes() *[]*dogma.DogmaAttributeNodeResolver {
-	var nodes []*dogma.DogmaAttributeNodeResolver
+func (t *EVETypeResolver) DogmaAttributes() *[]*DogmaAttributeNodeResolver {
+	var nodes []*DogmaAttributeNodeResolver
 	for _, attributeNode := range t.EveType.DogmaAttributes {
-		nodes = append(nodes, &dogma.DogmaAttributeNodeResolver{&dogma.DogmaAttributeNode{
+		nodes = append(nodes, &DogmaAttributeNodeResolver{&DogmaAttributeNode{
 			attributeNode.AttributeID,
 			attributeNode.Value,
 		}})

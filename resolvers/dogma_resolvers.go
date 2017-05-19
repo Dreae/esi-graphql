@@ -1,4 +1,4 @@
-package dogma
+package resolvers
 
 import (
 	"encoding/json"

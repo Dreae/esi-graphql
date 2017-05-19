@@ -1,20 +1,25 @@
 package resolvers
 
-import (
-	"github.com/dreae/esi-graphql/resolvers/dogma"
-	"github.com/dreae/esi-graphql/resolvers/universe"
-)
+type ContextKey string
 
 type Resolver struct{}
 
-func (r *Resolver) DogmaAttribute(args *struct{ AttributeID int32 }) (*dogma.DogmaAttributeResolver, error) {
-	return dogma.GetDogmaAttributeResolver(args.AttributeID)
+func (r *Resolver) DogmaAttribute(args *struct{ AttributeID int32 }) (*DogmaAttributeResolver, error) {
+	return GetDogmaAttributeResolver(args.AttributeID)
 }
 
-func (r *Resolver) DogmaAttributes() (*[]*dogma.DogmaAttributeNodeResolver, error) {
-	return dogma.GetDogmaList()
+func (r *Resolver) DogmaAttributes() (*[]*DogmaAttributeNodeResolver, error) {
+	return GetDogmaList()
 }
 
-func (r *Resolver) Type(args *struct{ TypeID int32 }) (*universe.EVETypeResolver, error) {
-	return universe.GetEVEType(args.TypeID)
+func (r *Resolver) Type(args *struct{ TypeID int32 }) (*EVETypeResolver, error) {
+	return GetEVEType(args.TypeID)
+}
+
+func (r *Resolver) Character(args *struct{ CharacterID int32 }) (*CharacterResolver, error) {
+	return GetCharacterByID(args.CharacterID)
+}
+
+func (r *Resolver) Corporation(args *struct{ CorporationID int32 }) (*CorporationResolver, error) {
+	return GetCorpByID(args.CorporationID)
 }

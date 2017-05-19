@@ -48,7 +48,7 @@ func main() {
 			return
 		}
 
-		ctx := context.WithValue(r.Context(), "auth", r.Header.Get("Authorization"))
+		ctx := context.WithValue(r.Context(), resolvers.ContextKey("auth"), r.Header.Get("Authorization"))
 
 		response := schema.Exec(ctx, params.Query, params.OperationName, params.Variables)
 

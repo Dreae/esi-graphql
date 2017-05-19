@@ -6,6 +6,8 @@ type Query {
   DogmaAttribute(AttributeID: Int!): DogmaAttribute!
 	DogmaAttributes: [DogmaAttributeNode]
 	Type(TypeID: Int!): Type!
+	Character(CharacterID: Int!): Character!
+	Corporation(CorporationID: Int!): Corporation!
 }
 
 type DogmaAttribute {
@@ -40,4 +42,34 @@ type Type {
 	Mass: Float
 	GraphicID: Int
 	DogmaAttributes: [DogmaAttributeNode]
+}
+
+type Character {
+	AllianceID: Int
+	AncestryID: Int
+	Birthday: String
+	BloodlineID: Int
+	CorporationID: Int
+	Description: String
+	Gender: String
+	Name: String
+	RaceID: Int
+	SecurityStatus: Float
+	Corporation: Corporation
+}
+
+type Corporation {
+	AllianceID: Int
+	CEOID: Int
+	Description: String
+	Name: String
+	CreationDate: String
+	CreatorID: Int
+	Faction: String
+	MemberCount: Int
+	TaxRate: Float
+	Ticker: String
+	URL: String
+	CEO: Character
+	Creator: Character
 }
