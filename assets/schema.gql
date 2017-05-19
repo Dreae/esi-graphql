@@ -8,6 +8,7 @@ type Query {
 	Type(TypeID: Int!): Type!
 	Character(CharacterID: Int!): Character!
 	Corporation(CorporationID: Int!): Corporation!
+	Skills(CharacterID: Int!): CharacterSkills!
 }
 
 type DogmaAttribute {
@@ -56,6 +57,7 @@ type Character {
 	RaceID: Int
 	SecurityStatus: Float
 	Corporation: Corporation
+	Skills: CharacterSkills
 }
 
 type Corporation {
@@ -72,4 +74,16 @@ type Corporation {
 	URL: String
 	CEO: Character
 	Creator: Character
+}
+
+type CharacterSkill {
+	CurrentSkillLevel: Int
+	SkillID: Int
+	SkillpointsInSkill: Int
+	Type: Type
+}
+
+type CharacterSkills {
+	Skills: [CharacterSkill]
+	TotalSP: Int
 }

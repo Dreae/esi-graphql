@@ -1,5 +1,9 @@
 package resolvers
 
+import (
+	"context"
+)
+
 type ContextKey string
 
 type Resolver struct{}
@@ -22,4 +26,8 @@ func (r *Resolver) Character(args *struct{ CharacterID int32 }) (*CharacterResol
 
 func (r *Resolver) Corporation(args *struct{ CorporationID int32 }) (*CorporationResolver, error) {
 	return GetCorpByID(args.CorporationID)
+}
+
+func (r *Resolver) Skills(ctx context.Context, args *struct{ CharacterID int32 }) (*CharacterSkillsResolver, error) {
+	return GetSkillsForCharID(ctx.Value(ContextKey("auth")).(string), args.CharacterID)
 }

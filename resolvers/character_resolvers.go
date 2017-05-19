@@ -1,12 +1,14 @@
 package resolvers
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
 type Character struct {
+	CharacterID    int32
 	AllianceID     int32   `json:"alliance_id"`
 	AncestryID     int32   `json:"ancestry_id"`
 	Birthday       string  `json:"birthday"`
@@ -67,6 +69,10 @@ func (c *CharacterResolver) Corporation() (*CorporationResolver, error) {
 	return GetCorpByID(c.character.CorporationID)
 }
 
+func (c *CharacterResolver) Skills(ctx context.Context) (*CharacterSkillsResolver, error) {
+	return GetSkillsForCharID(ctx.Value(ContextKey("auth")).(string), c.character.CharacterID)
+}
+
 func GetCharacterByID(charID int32) (*CharacterResolver, error) {
 	var char Character
 	resp, err := http.Get(fmt.Sprintf("https://esi.tech.ccp.is/latest/characters/%d/?datasource=tranquility", charID))
@@ -75,6 +81,7 @@ func GetCharacterByID(charID int32) (*CharacterResolver, error) {
 	}
 
 	json.NewDecoder(resp.Body).Decode(&char)
+	char.CharacterID = charID
 
 	return &CharacterResolver{&char}, nil
 }

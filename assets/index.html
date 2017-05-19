@@ -25,9 +25,19 @@
         var ccpURL = "https://login.eveonline.com/oauth/authorize?response_type=token&realm=ESI";
         ccpURL += "&redirect_uri=" + redirectURL;
         ccpURL += "&client_id=" + clientId;
+				ccpURL += "&scope=" + buildScope();
 
         return ccpURL;
       }
+
+			function buildScope() {
+				var scopes = [
+					'esi-skills.read_skills.v1',
+					'esi-skills.read_skillqueue.v1',
+				];
+
+				return scopes.join(' '); 
+			}
 
 			function graphQLFetcher(graphQLParams) {
 				graphQLParams.variables = graphQLParams.variables ? JSON.parse(graphQLParams.variables) : null;
