@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -16,7 +15,7 @@ var schema *graphql.Schema
 
 func init() {
 	var err error
-	schemaFile, err := ioutil.ReadFile("./assets/schema.gql")
+	schemaFile, err := Asset("assets/schema.gql")
 	if err != nil {
 		panic(err)
 	}
@@ -28,7 +27,7 @@ func init() {
 }
 
 func main() {
-	page, err := ioutil.ReadFile("./assets/index.html")
+	page, err := Asset("assets/index.html")
 	if err != nil {
 		panic("Could not read index file from ./assets/index.html")
 	}
