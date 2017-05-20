@@ -10,6 +10,7 @@ type Query {
 	Corporation(CorporationID: Int!): Corporation!
 	Skills(CharacterID: Int!): CharacterSkills!
 	SkillQueue(CharacterID: Int!): [SkillQueueItem]
+	Alliance(AllianceID: Int!): Alliance!
 }
 
 type DogmaAttribute {
@@ -58,6 +59,7 @@ type Character {
 	RaceID: Int
 	SecurityStatus: Float
 	Corporation: Corporation
+	Alliance: Alliance
 	Skills: CharacterSkills
 	SkillQueue: [SkillQueueItem]
 }
@@ -76,6 +78,7 @@ type Corporation {
 	URL: String
 	CEO: Character
 	Creator: Character
+	Alliance: Alliance
 }
 
 type CharacterSkill {
@@ -100,4 +103,12 @@ type SkillQueueItem {
 	StartDate: String
 	TrainingStartSP: Int
 	Type: Type
+}
+
+type Alliance {
+	Name: String
+	DateFounded: String
+	ExecutorID: Int
+	Ticker: String
+	Executor: Corporation
 }

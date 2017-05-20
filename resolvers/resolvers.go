@@ -35,3 +35,7 @@ func (r *Resolver) Skills(ctx context.Context, args *struct{ CharacterID int32 }
 func (r *Resolver) SkillQueue(ctx context.Context, args *struct{ CharacterID int32 }) (*[]*SkillQueueResolver, error) {
 	return GetSkillQueueForCharID(ctx.Value(ContextKey("auth")).(string), args.CharacterID)
 }
+
+func (r *Resolver) Alliance(args *struct{ AllianceID int32 }) (*AllianceResolver, error) {
+	return GetAllianceByID(args.AllianceID)
+}

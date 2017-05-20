@@ -69,6 +69,10 @@ func (c *CharacterResolver) Corporation() (*CorporationResolver, error) {
 	return GetCorpByID(c.character.CorporationID)
 }
 
+func (c *CharacterResolver) Alliance() (*AllianceResolver, error) {
+	return GetAllianceByID(c.character.AllianceID)
+}
+
 func (c *CharacterResolver) Skills(ctx context.Context) (*CharacterSkillsResolver, error) {
 	return GetSkillsForCharID(ctx.Value(ContextKey("auth")).(string), c.character.CharacterID)
 }

@@ -76,6 +76,10 @@ func (c *CorporationResolver) Creator() (*CharacterResolver, error) {
 	return GetCharacterByID(c.corp.CreatorID)
 }
 
+func (c *CorporationResolver) Alliance() (*AllianceResolver, error) {
+	return GetAllianceByID(c.corp.AllianceID)
+}
+
 func GetCorpByID(corpID int32) (*CorporationResolver, error) {
 	var corp Corporation
 	resp, err := http.Get(fmt.Sprintf("https://esi.tech.ccp.is/latest/corporations/%d/?datasource=tranquility", corpID))
