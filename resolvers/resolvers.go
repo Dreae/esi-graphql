@@ -31,3 +31,7 @@ func (r *Resolver) Corporation(args *struct{ CorporationID int32 }) (*Corporatio
 func (r *Resolver) Skills(ctx context.Context, args *struct{ CharacterID int32 }) (*CharacterSkillsResolver, error) {
 	return GetSkillsForCharID(ctx.Value(ContextKey("auth")).(string), args.CharacterID)
 }
+
+func (r *Resolver) SkillQueue(ctx context.Context, args *struct{ CharacterID int32 }) (*[]*SkillQueueResolver, error) {
+	return GetSkillQueueForCharID(ctx.Value(ContextKey("auth")).(string), args.CharacterID)
+}

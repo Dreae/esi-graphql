@@ -73,6 +73,10 @@ func (c *CharacterResolver) Skills(ctx context.Context) (*CharacterSkillsResolve
 	return GetSkillsForCharID(ctx.Value(ContextKey("auth")).(string), c.character.CharacterID)
 }
 
+func (c *CharacterResolver) SkillQueue(ctx context.Context) (*[]*SkillQueueResolver, error) {
+	return GetSkillQueueForCharID(ctx.Value(ContextKey("auth")).(string), c.character.CharacterID)
+}
+
 func GetCharacterByID(charID int32) (*CharacterResolver, error) {
 	var char Character
 	resp, err := http.Get(fmt.Sprintf("https://esi.tech.ccp.is/latest/characters/%d/?datasource=tranquility", charID))

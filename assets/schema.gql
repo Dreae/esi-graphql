@@ -9,6 +9,7 @@ type Query {
 	Character(CharacterID: Int!): Character!
 	Corporation(CorporationID: Int!): Corporation!
 	Skills(CharacterID: Int!): CharacterSkills!
+	SkillQueue(CharacterID: Int!): [SkillQueueItem]
 }
 
 type DogmaAttribute {
@@ -58,6 +59,7 @@ type Character {
 	SecurityStatus: Float
 	Corporation: Corporation
 	Skills: CharacterSkills
+	SkillQueue: [SkillQueueItem]
 }
 
 type Corporation {
@@ -86,4 +88,16 @@ type CharacterSkill {
 type CharacterSkills {
 	Skills: [CharacterSkill]
 	TotalSP: Int
+}
+
+type SkillQueueItem {
+	FinishDate: String
+	FinishedLevel: Int
+	LevelEndSP: Int
+	LevelStartSP: Int
+	QueuePosition: Int
+	SkillID: Int
+	StartDate: String
+	TrainingStartSP: Int
+	Type: Type
 }
