@@ -39,3 +39,10 @@ func (r *Resolver) SkillQueue(ctx context.Context, args *struct{ CharacterID int
 func (r *Resolver) Alliance(args *struct{ AllianceID int32 }) (*AllianceResolver, error) {
 	return GetAllianceByID(args.AllianceID)
 }
+
+func (r *Resolver) Search(args *struct {
+	SearchTypes []*string
+	Keyword     string
+}) (*SearchResultsResolver, error) {
+	return DoSearch(&args.SearchTypes, args.Keyword)
+}
