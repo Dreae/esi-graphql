@@ -11,6 +11,7 @@ type Query {
 	Skills(CharacterID: Int!): CharacterSkills!
 	SkillQueue(CharacterID: Int!): [SkillQueueItem]
 	Alliance(AllianceID: Int!): Alliance!
+	Search(SearchTypes: [SearchType]!, Keyword: String!): SearchResults!
 }
 
 type DogmaAttribute {
@@ -123,4 +124,52 @@ type AllianceMember {
 type AllianceIcons {
 	LargeIcon: String
 	SmallIcon: String
+}
+
+type SearchResults {
+	Agent: [Int]
+	Alliance: [AllianceResult]
+	Character: [CharacterResult]
+	Constellation: [Int]
+	Corporation: [CorporationResult]
+	Faction: [Int]
+	InventoryType: [EVETypeResult]
+	Region: [Int]
+	SolarSystem: [Int]
+	Station: [Int]
+	Wormhole: [Int]
+}
+
+enum SearchType {
+	AGENT,
+	ALLIANCE,
+	CHARACTER,
+	CONSTELLATION,
+	CORPORATION,
+	FACTION,
+	INVENTORYTYPE,
+	REGION,
+	SOLARSYSTEM,
+	STATION,
+	WORMHOLE
+}
+
+type AllianceResult {
+	AllianceID: Int
+	Alliance: Alliance
+}
+
+type CharacterResult {
+	CharacterID: Int
+	Character: Character
+}
+
+type CorporationResult {
+	CorporationID: Int
+	Corporation: Corporation
+}
+
+type EVETypeResult {
+	TypeID: Int
+	Type: Type
 }

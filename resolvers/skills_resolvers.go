@@ -2,8 +2,8 @@ package resolvers
 
 import (
 	"encoding/json"
-	"fmt"
-	"net/http"
+
+	"github.com/dreae/esi-graphql/resolvers/http"
 )
 
 type CharacterSkill struct {
@@ -107,9 +107,7 @@ func (skills *CharacterSkillsResolver) TotalSP() *int32 {
 
 func GetSkillsForCharID(auth string, charID int32) (*CharacterSkillsResolver, error) {
 	var skills CharacterSkills
-	req, _ := http.NewRequest("GET", fmt.Sprintf("https://esi.tech.ccp.is/latest/characters/%d/skills/?datasource=tranquility", charID), nil)
-	req.Header.Set("Authorization", auth)
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := http.MakeAuthorizedRequest(auth, "characters/%d/skills/", charID)
 	if err != nil {
 		return &CharacterSkillsResolver{&skills}, err
 	}
@@ -122,9 +120,7 @@ func GetSkillsForCharID(auth string, charID int32) (*CharacterSkillsResolver, er
 func GetSkillQueueForCharID(auth string, charID int32) (*[]*SkillQueueResolver, error) {
 	var skillQueue []SkillQueueSkill
 
-	req, _ := http.NewRequest("GET", fmt.Sprintf("https://esi.tech.ccp.is/latest/characters/%d/skillqueue/?datasource=tranquility", charID), nil)
-	req.Header.Set("Authorization", auth)
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := http.MakeAuthorizedRequest(auth, "characters/%d/skillqueue/", charID)
 	if err != nil {
 		return nil, err
 	}

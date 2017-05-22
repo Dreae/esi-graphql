@@ -2,8 +2,8 @@ package resolvers
 
 import (
 	"encoding/json"
-	"fmt"
-	"net/http"
+
+	"github.com/dreae/esi-graphql/resolvers/http"
 )
 
 type DogmaAttributeResolver struct {
@@ -86,7 +86,7 @@ type DogmaAttributeNode struct {
 
 func GetDogmaAttributeResolver(attributeID int32) (*DogmaAttributeResolver, error) {
 	var attribute DogmaAttribute
-	resp, err := http.Get(fmt.Sprintf("https://esi.tech.ccp.is/latest/dogma/attributes/%d/?datasource=tranquility", attributeID))
+	resp, err := http.MakeRequest("dogma/attributes/%d/", attributeID)
 	if err != nil {
 		return &DogmaAttributeResolver{&attribute}, err
 	}
@@ -98,7 +98,7 @@ func GetDogmaAttributeResolver(attributeID int32) (*DogmaAttributeResolver, erro
 
 func GetDogmaList() (*[]*DogmaAttributeNodeResolver, error) {
 	var attributes []int32
-	resp, err := http.Get("https://esi.tech.ccp.is/latest/dogma/attributes/?datasource=tranquility")
+	resp, err := http.MakeRequest("dogma/attributes/")
 	if err != nil {
 		return nil, err
 	}

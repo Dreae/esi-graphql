@@ -2,8 +2,8 @@ package resolvers
 
 import (
 	"encoding/json"
-	"fmt"
-	"net/http"
+
+	"github.com/dreae/esi-graphql/resolvers/http"
 )
 
 type Alliance struct {
@@ -77,7 +77,7 @@ func (i *AllianceIconResolver) SmallIcon() *string {
 
 func GetAllianceByID(allianceID int32) (*AllianceResolver, error) {
 	var alliance Alliance
-	resp, err := http.Get(fmt.Sprintf("https://esi.tech.ccp.is/latest/alliances/%d/?datasource=tranquility", allianceID))
+	resp, err := http.MakeRequest("alliances/%d/", allianceID)
 	if err != nil {
 		return &AllianceResolver{&alliance}, err
 	}
@@ -91,7 +91,7 @@ func GetAllianceByID(allianceID int32) (*AllianceResolver, error) {
 func GetAllianceMembers(allianceID int32) (*[]*AllianceMemberResolver, error) {
 	var memberIDs []int32
 	var resolvers []*AllianceMemberResolver
-	resp, err := http.Get(fmt.Sprintf("https://esi.tech.ccp.is/latest/alliances/%d/corporations/?datasource=tranquility", allianceID))
+	resp, err := http.MakeRequest("alliances/%d/corporations/", allianceID)
 	if err != nil {
 		return &resolvers, err
 	}
@@ -106,7 +106,7 @@ func GetAllianceMembers(allianceID int32) (*[]*AllianceMemberResolver, error) {
 
 func GetAllianceIcons(allianceID int32) (*AllianceIconResolver, error) {
 	var icons AllianceIcons
-	resp, err := http.Get(fmt.Sprintf("https://esi.tech.ccp.is/latest/alliances/%d/icons/?datasource=tranquility", allianceID))
+	resp, err := http.MakeRequest("alliances/%d/icons/", allianceID)
 	if err != nil {
 		return &AllianceIconResolver{&icons}, err
 	}

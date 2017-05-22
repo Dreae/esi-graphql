@@ -1,10 +1,9 @@
 package resolvers
 
 import (
-	"fmt"
-	"net/http"
-
 	"encoding/json"
+
+	"github.com/dreae/esi-graphql/resolvers/http"
 )
 
 type EVEType struct {
@@ -84,7 +83,7 @@ func (t *EVETypeResolver) DogmaAttributes() *[]*DogmaAttributeNodeResolver {
 
 func GetEVEType(typeID int32) (*EVETypeResolver, error) {
 	var type_ EVEType
-	resp, err := http.Get(fmt.Sprintf("https://esi.tech.ccp.is/latest/universe/types/%d/?datasource=tranquility&language=en-us", typeID))
+	resp, err := http.MakeRequest("universe/types/%d/", typeID)
 	if err != nil {
 		return &EVETypeResolver{&type_}, err
 	}

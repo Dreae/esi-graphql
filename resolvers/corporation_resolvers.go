@@ -2,8 +2,8 @@ package resolvers
 
 import (
 	"encoding/json"
-	"fmt"
-	"net/http"
+
+	"github.com/dreae/esi-graphql/resolvers/http"
 )
 
 type Corporation struct {
@@ -82,7 +82,7 @@ func (c *CorporationResolver) Alliance() (*AllianceResolver, error) {
 
 func GetCorpByID(corpID int32) (*CorporationResolver, error) {
 	var corp Corporation
-	resp, err := http.Get(fmt.Sprintf("https://esi.tech.ccp.is/latest/corporations/%d/?datasource=tranquility", corpID))
+	resp, err := http.MakeRequest("corporations/%d/", corpID)
 	if err != nil {
 		return &CorporationResolver{&corp}, err
 	}

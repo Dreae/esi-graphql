@@ -3,8 +3,8 @@ package resolvers
 import (
 	"context"
 	"encoding/json"
-	"fmt"
-	"net/http"
+
+	"github.com/dreae/esi-graphql/resolvers/http"
 )
 
 type Character struct {
@@ -83,7 +83,7 @@ func (c *CharacterResolver) SkillQueue(ctx context.Context) (*[]*SkillQueueResol
 
 func GetCharacterByID(charID int32) (*CharacterResolver, error) {
 	var char Character
-	resp, err := http.Get(fmt.Sprintf("https://esi.tech.ccp.is/latest/characters/%d/?datasource=tranquility", charID))
+	resp, err := http.MakeRequest("characters/%d/", charID)
 	if err != nil {
 		return &CharacterResolver{&char}, err
 	}
