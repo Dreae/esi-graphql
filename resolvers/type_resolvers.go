@@ -3,6 +3,7 @@ package resolvers
 import (
 	"encoding/json"
 
+	"github.com/dreae/esi-graphql/cache"
 	"github.com/dreae/esi-graphql/resolvers/http"
 )
 
@@ -81,7 +82,14 @@ func (t *EVETypeResolver) DogmaAttributes() *[]*DogmaAttributeNodeResolver {
 	return &nodes
 }
 
+var typeCache = cache.New(3600)
+
 func GetEVEType(typeID int32) (*EVETypeResolver, error) {
+	if item, ok := typeCache.Get(typeID); ok {
+		eveType := item.(EVEType)
+		return &EVETypeResolver{&eveType}, nil
+	}
+
 	var type_ EVEType
 	resp, err := http.MakeRequest("universe/types/%d/", typeID)
 	if err != nil {
@@ -89,6 +97,8 @@ func GetEVEType(typeID int32) (*EVETypeResolver, error) {
 	}
 
 	json.NewDecoder(resp.Body).Decode(&type_)
+
+	typeCache.Set(typeID, type_)
 
 	return &EVETypeResolver{&type_}, nil
 }

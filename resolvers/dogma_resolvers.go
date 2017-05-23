@@ -3,6 +3,7 @@ package resolvers
 import (
 	"encoding/json"
 
+	"github.com/dreae/esi-graphql/cache"
 	"github.com/dreae/esi-graphql/resolvers/http"
 )
 
@@ -84,7 +85,14 @@ type DogmaAttributeNode struct {
 	Value       float64 `json:"value"`
 }
 
+var dogmaCache = cache.New(3600)
+
 func GetDogmaAttributeResolver(attributeID int32) (*DogmaAttributeResolver, error) {
+	if item, ok := dogmaCache.Get(attributeID); ok {
+		attribute := item.(DogmaAttribute)
+		return &DogmaAttributeResolver{&attribute}, nil
+	}
+
 	var attribute DogmaAttribute
 	resp, err := http.MakeRequest("dogma/attributes/%d/", attributeID)
 	if err != nil {
@@ -92,6 +100,8 @@ func GetDogmaAttributeResolver(attributeID int32) (*DogmaAttributeResolver, erro
 	}
 
 	json.NewDecoder(resp.Body).Decode(&attribute)
+
+	dogmaCache.Set(attributeID, attribute)
 
 	return &DogmaAttributeResolver{&attribute}, nil
 }
