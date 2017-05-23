@@ -22,6 +22,28 @@ type EVEType struct {
 	DogmaAttributes []DogmaAttributeNode `json:"dogma_attributes"`
 }
 
+type EVEPosition struct {
+	X float64 `json:"x"`
+	Y float64 `json:"y"`
+	Z float64 `json:"z"`
+}
+
+type PositionResolver struct {
+	position *EVEPosition
+}
+
+func (r *PositionResolver) X() *float64 {
+	return &r.position.X
+}
+
+func (r *PositionResolver) Y() *float64 {
+	return &r.position.Y
+}
+
+func (r *PositionResolver) Z() *float64 {
+	return &r.position.Z
+}
+
 type EVETypeResolver struct {
 	EveType *EVEType
 }

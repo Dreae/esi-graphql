@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.7.8/graphiql.css" />
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.7.8/graphiql.js"></script>
-	</head>
-	<body style="width: 100%; height: 100%; margin: 0; overflow: hidden;">
-		<div id="graphiql" style="height: 100vh;">Loading...</div>
-		<script>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.7.8/graphiql.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.7.8/graphiql.js"></script>
+  </head>
+  <body style="width: 100%; height: 100%; margin: 0; overflow: hidden;">
+    <div id="graphiql" style="height: 100vh;">Loading...</div>
+    <script>
       var loggedIn = false;
       var token = "";
 
@@ -25,47 +25,48 @@
         var ccpURL = "https://login.eveonline.com/oauth/authorize?response_type=token&realm=ESI";
         ccpURL += "&redirect_uri=" + redirectURL;
         ccpURL += "&client_id=" + clientId;
-				ccpURL += "&scope=" + buildScope();
+        ccpURL += "&scope=" + buildScope();
 
         return ccpURL;
       }
 
-			function buildScope() {
-				var scopes = [
-					'esi-skills.read_skills.v1',
-					'esi-skills.read_skillqueue.v1',
-				];
+      function buildScope() {
+        var scopes = [
+          'esi-skills.read_skills.v1',
+          'esi-skills.read_skillqueue.v1',
+          'esi-universe.read_structures.v1'
+        ];
 
-				return scopes.join(' '); 
-			}
+        return scopes.join(' ');
+      }
 
-			function graphQLFetcher(graphQLParams) {
-				graphQLParams.variables = graphQLParams.variables ? JSON.parse(graphQLParams.variables) : null;
+      function graphQLFetcher(graphQLParams) {
+        graphQLParams.variables = graphQLParams.variables ? JSON.parse(graphQLParams.variables) : null;
         var headers = {};
         if (loggedIn) {
           headers["Authorization"] = "Bearer " + token;
         }
 
-				return fetch("/query", {
-					method: "post",
-					body: JSON.stringify(graphQLParams),
-					credentials: "include",
-					headers: headers,
-				}).then(function (response) {
-					return response.text();
-				}).then(function (responseBody) {
-					try {
-						return JSON.parse(responseBody);
-					} catch (error) {
-						return responseBody;
-					}
-				});
-			}
+        return fetch("/query", {
+          method: "post",
+          body: JSON.stringify(graphQLParams),
+          credentials: "include",
+          headers: headers,
+        }).then(function (response) {
+          return response.text();
+        }).then(function (responseBody) {
+          try {
+            return JSON.parse(responseBody);
+          } catch (error) {
+            return responseBody;
+          }
+        });
+      }
 
-			ReactDOM.render(
-				React.createElement(GraphiQL, {fetcher: graphQLFetcher}),
-				document.getElementById("graphiql")
-			);
+      ReactDOM.render(
+        React.createElement(GraphiQL, {fetcher: graphQLFetcher}),
+        document.getElementById("graphiql")
+      );
 
       window.setTimeout(function() {
         if (!loggedIn) {
@@ -79,6 +80,6 @@
           }
         }
       }, 0)
-		</script>
-	</body>
+    </script>
+  </body>
 </html>

@@ -12,6 +12,9 @@ type Query {
 	SkillQueue(CharacterID: Int!): [SkillQueueItem]
 	Alliance(AllianceID: Int!): Alliance!
 	Search(SearchTypes: [SearchType]!, Keyword: String!): SearchResults!
+  Structures: [StructureNode]
+  Structure(StructureID: Float!): Structure!
+  SolarSystem(SystemID: Int!): SolarSystem!
 }
 
 type DogmaAttribute {
@@ -46,6 +49,12 @@ type Type {
 	Mass: Float
 	GraphicID: Int
 	DogmaAttributes: [DogmaAttributeNode]
+}
+
+type Position {
+  X: Float
+  Y: Float
+  Z: Float
 }
 
 type Character {
@@ -124,6 +133,42 @@ type AllianceMember {
 type AllianceIcons {
 	LargeIcon: String
 	SmallIcon: String
+}
+
+type Structure {
+  Name: String
+  SolarSystemID: Int
+  TypeID: Int
+  Position: Position
+}
+
+type StructureNode {
+  StructureID: Float
+  Structure: Structure
+}
+
+type SolarSystem {
+  Name: String
+  ConstellationID: Int
+  Planets: [SystemPlanet]
+  Position: Position
+  SecurityClass: String
+  SecurityStatus: Float
+  Stargates: [SystemStargate]
+  SystemID: Int
+}
+
+type SystemPlanet {
+  Moons: [PlanetMoon]
+  PlanetID: Int
+}
+
+type SystemStargate {
+  StargateID: Int
+}
+
+type PlanetMoon {
+  MoonID: Int
 }
 
 type SearchResults {

@@ -46,3 +46,15 @@ func (r *Resolver) Search(args *struct {
 }) (*SearchResultsResolver, error) {
 	return DoSearch(&args.SearchTypes, args.Keyword)
 }
+
+func (r *Resolver) Structures() (*[]*StructureNode, error) {
+	return GetAllStructures()
+}
+
+func (r *Resolver) Structure(ctx context.Context, args *struct{ StructureID float64 }) (*StructureResolver, error) {
+	return GetStructureByID(args.StructureID, ctx.Value(ContextKey("auth")).(string))
+}
+
+func (r *Resolver) SolarSystem(args *struct{ SystemID int32 }) (*SolarSystemResolver, error) {
+	return GetSolarSystemByID(args.SystemID)
+}
