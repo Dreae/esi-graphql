@@ -50,8 +50,8 @@ func (r *SearchResultsResolver) Agents() *[]*int32 {
 func (r *SearchResultsResolver) Alliances() *[]*AllianceResult {
 	var allianceResults []*AllianceResult
 
-	for _, id := range r.r.Alliances {
-		allianceResults = append(allianceResults, &id)
+	for idx, _ := range r.r.Alliances {
+		allianceResults = append(allianceResults, &r.r.Alliances[idx])
 	}
 
 	return &allianceResults
@@ -60,8 +60,8 @@ func (r *SearchResultsResolver) Alliances() *[]*AllianceResult {
 func (r *SearchResultsResolver) Characters() *[]*CharacterResult {
 	var characterResults []*CharacterResult
 
-	for _, id := range r.r.Characters {
-		characterResults = append(characterResults, &id)
+	for idx, _ := range r.r.Characters {
+		characterResults = append(characterResults, &r.r.Characters[idx])
 	}
 
 	return &characterResults
@@ -79,8 +79,8 @@ func (r *SearchResultsResolver) Constellations() *[]*int32 {
 func (r *SearchResultsResolver) Corporations() *[]*CorporationResult {
 	var corporationResults []*CorporationResult
 
-	for _, id := range r.r.Corporations {
-		corporationResults = append(corporationResults, &id)
+	for idx, _ := range r.r.Corporations {
+		corporationResults = append(corporationResults, &r.r.Corporations[idx])
 	}
 
 	return &corporationResults
@@ -98,8 +98,8 @@ func (r *SearchResultsResolver) Factions() *[]*int32 {
 func (r *SearchResultsResolver) InventoryTypes() *[]*EVETypeResult {
 	var typeResults []*EVETypeResult
 
-	for _, id := range r.r.Types {
-		typeResults = append(typeResults, &id)
+	for idx, _ := range r.r.Types {
+		typeResults = append(typeResults, &r.r.Types[idx])
 	}
 
 	return &typeResults
