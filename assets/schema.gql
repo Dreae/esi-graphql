@@ -180,7 +180,7 @@ type SearchResults {
 	Factions: [Int]
 	InventoryTypes: [EVETypeResult]
 	Regions: [Int]
-	SolarSystems: [Int]
+	SolarSystems: [SolarSystemResult]
 	Stations: [Int]
 	Wormholes: [Int]
 }
@@ -217,4 +217,9 @@ type CorporationResult {
 type EVETypeResult {
 	TypeID: Int
 	Type: Type
+}
+
+type SolarSystemResult {
+  SystemID: Int
+  System: SolarSystem
 }

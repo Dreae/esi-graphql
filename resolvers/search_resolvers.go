@@ -11,34 +11,28 @@ import (
 )
 
 type searchResults struct {
-	Agents         []int32 `json:"agent"`
-	Alliances      []int32 `json:"alliance"`
-	Characters     []int32 `json:"character"`
-	Constellations []int32 `json:"constellation"`
-	Corporations   []int32 `json:"corporation"`
-	Factions       []int32 `json:"faction"`
-	Types          []int32 `json:"inventorytype"`
-	Regions        []int32 `json:"region"`
-	SolarSystems   []int32 `json:"solarsystem"`
-	Stations       []int32 `json:"station"`
-	Wormholes      []int32 `json:"wormhole"`
+	Agents         []int32             `json:"agent"`
+	Alliances      []AllianceResult    `json:"alliance"`
+	Characters     []CharacterResult   `json:"character"`
+	Constellations []int32             `json:"constellation"`
+	Corporations   []CorporationResult `json:"corporation"`
+	Factions       []int32             `json:"faction"`
+	Types          []EVETypeResult     `json:"inventorytype"`
+	Regions        []int32             `json:"region"`
+	SolarSystems   []SolarSystemResult `json:"solarsystem"`
+	Stations       []int32             `json:"station"`
+	Wormholes      []int32             `json:"wormhole"`
 }
 
-type CharacterResult struct {
-	id int32
-}
+type CharacterResult int32
 
-type CorporationResult struct {
-	id int32
-}
+type CorporationResult int32
 
-type AllianceResult struct {
-	id int32
-}
+type AllianceResult int32
 
-type EVETypeResult struct {
-	id int32
-}
+type EVETypeResult int32
+
+type SolarSystemResult int32
 
 type SearchResultsResolver struct {
 	r *searchResults
@@ -57,7 +51,7 @@ func (r *SearchResultsResolver) Alliances() *[]*AllianceResult {
 	var allianceResults []*AllianceResult
 
 	for _, id := range r.r.Alliances {
-		allianceResults = append(allianceResults, &AllianceResult{id})
+		allianceResults = append(allianceResults, &id)
 	}
 
 	return &allianceResults
@@ -67,7 +61,7 @@ func (r *SearchResultsResolver) Characters() *[]*CharacterResult {
 	var characterResults []*CharacterResult
 
 	for _, id := range r.r.Characters {
-		characterResults = append(characterResults, &CharacterResult{id})
+		characterResults = append(characterResults, &id)
 	}
 
 	return &characterResults
@@ -86,7 +80,7 @@ func (r *SearchResultsResolver) Corporations() *[]*CorporationResult {
 	var corporationResults []*CorporationResult
 
 	for _, id := range r.r.Corporations {
-		corporationResults = append(corporationResults, &CorporationResult{id})
+		corporationResults = append(corporationResults, &id)
 	}
 
 	return &corporationResults
@@ -105,7 +99,7 @@ func (r *SearchResultsResolver) InventoryTypes() *[]*EVETypeResult {
 	var typeResults []*EVETypeResult
 
 	for _, id := range r.r.Types {
-		typeResults = append(typeResults, &EVETypeResult{id})
+		typeResults = append(typeResults, &id)
 	}
 
 	return &typeResults
@@ -120,8 +114,8 @@ func (r *SearchResultsResolver) Regions() *[]*int32 {
 	return &ids
 }
 
-func (r *SearchResultsResolver) SolarSystems() *[]*int32 {
-	var ids []*int32
+func (r *SearchResultsResolver) SolarSystems() *[]*SolarSystemResult {
+	var ids []*SolarSystemResult
 	for idx, _ := range r.r.SolarSystems {
 		ids = append(ids, &r.r.SolarSystems[idx])
 	}
@@ -148,35 +142,43 @@ func (r *SearchResultsResolver) Wormholes() *[]*int32 {
 }
 
 func (r *CharacterResult) CharacterID() *int32 {
-	return &r.id
+	return (*int32)(r)
 }
 
 func (r *CharacterResult) Character() (*CharacterResolver, error) {
-	return GetCharacterByID(r.id)
+	return GetCharacterByID(*(*int32)(r))
 }
 
 func (r *CorporationResult) CorporationID() *int32 {
-	return &r.id
+	return (*int32)(r)
 }
 
 func (r *CorporationResult) Corporation() (*CorporationResolver, error) {
-	return GetCorpByID(r.id)
+	return GetCorpByID(*(*int32)(r))
 }
 
 func (r *AllianceResult) AllianceID() *int32 {
-	return &r.id
+	return (*int32)(r)
 }
 
 func (r *AllianceResult) Alliance() (*AllianceResolver, error) {
-	return GetAllianceByID(r.id)
+	return GetAllianceByID(*(*int32)(r))
 }
 
 func (r *EVETypeResult) TypeID() *int32 {
-	return &r.id
+	return (*int32)(r)
 }
 
 func (r *EVETypeResult) Type() (*EVETypeResolver, error) {
-	return GetEVEType(r.id)
+	return GetEVEType(*(*int32)(r))
+}
+
+func (r *SolarSystemResult) SystemID() *int32 {
+	return (*int32)(r)
+}
+
+func (r *SolarSystemResult) System() (*SolarSystemResolver, error) {
+	return GetSolarSystemByID(*(*int32)(r))
 }
 
 func DoSearch(types *[]*string, keyword string) (*SearchResultsResolver, error) {
