@@ -171,9 +171,19 @@ func (r *KillmailAttackerResolver) WeaponTypeID() *int32 {
 	return &r.attacker.WeaponTypeID
 }
 
+// WeaponType returns the type of the attacker's weapon
+func (r *KillmailAttackerResolver) WeaponType() (*EVETypeResolver, error) {
+	return GetEVEType(r.attacker.WeaponTypeID)
+}
+
 // ShipTypeID returns the attacker's ship type
 func (r *KillmailAttackerResolver) ShipTypeID() *int32 {
 	return &r.attacker.ShipTypeID
+}
+
+// ShipType returns the type of the attacker's ship
+func (r *KillmailAttackerResolver) ShipType() (*EVETypeResolver, error) {
+	return GetEVEType(r.attacker.ShipTypeID)
 }
 
 // Character is a pointer to fetch the details of the attacking character
@@ -184,6 +194,11 @@ func (r *KillmailAttackerResolver) Character() (*CharacterResolver, error) {
 // CharacterID returns the ID of the victim's character
 func (r *KillmailVictimResolver) CharacterID() *int32 {
 	return &r.victim.CharacterID
+}
+
+// Character serves as a pointer to fetch details of the victim's character
+func (r *KillmailVictimResolver) Character() (*CharacterResolver, error) {
+	return GetCharacterByID(r.victim.CharacterID)
 }
 
 // AllianceID returns the ID of the vicitim's alliance
@@ -219,6 +234,11 @@ func (r *KillmailVictimResolver) Items() *[]*KillmailItemResolver {
 // ShipTypeID returns the ID of the type of the victim's ship
 func (r *KillmailVictimResolver) ShipTypeID() *int32 {
 	return &r.victim.ShipTypeID
+}
+
+// ShipType returns the type of victim's ship
+func (r *KillmailVictimResolver) ShipType() (*EVETypeResolver, error) {
+	return GetEVEType(r.victim.ShipTypeID)
 }
 
 // FactionID returns the ID of the victim's faction
@@ -259,6 +279,11 @@ func (r *KillmailItemResolver) Items() *[]*KillmailItemResolver {
 	}
 
 	return &resolvers
+}
+
+// Type returns the type of this item
+func (r *KillmailItemResolver) Type() (*EVETypeResolver, error) {
+	return GetEVEType(r.item.ItemTypeID)
 }
 
 // GetRecentKillsByCharacter gets the recent killmails for given character ID

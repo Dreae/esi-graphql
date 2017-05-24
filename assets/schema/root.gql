@@ -15,4 +15,5 @@ type Query {
   Structures: [StructureNode]
   Structure(StructureID: Float!): Structure!
   SolarSystem(SystemID: Int!): SolarSystem!
+  Killmail(KillmailID: Int!, KillmailHash: String!): Killmail!
 }

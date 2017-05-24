@@ -72,3 +72,11 @@ func (r *Resolver) Structure(ctx context.Context, args *struct{ StructureID floa
 func (r *Resolver) SolarSystem(args *struct{ SystemID int32 }) (*SolarSystemResolver, error) {
 	return GetSolarSystemByID(args.SystemID)
 }
+
+// Killmail queries ESI to get details of a killmail
+func (r *Resolver) Killmail(args *struct {
+	KillmailID   int32
+	KillmailHash string
+}) (*KillmailResolver, error) {
+	return GetKillmailDetails(args.KillmailID, args.KillmailHash)
+}

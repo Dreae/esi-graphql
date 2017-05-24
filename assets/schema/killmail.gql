@@ -23,6 +23,8 @@ type KillmailVictim {
   Position: Position
   Items: [KillmailItem]
   ShipTypeID: Int
+  Character: Character
+  ShipType: Type
 }
 
 type KillmailAttacker {
@@ -36,6 +38,8 @@ type KillmailAttacker {
   ShipTypeID: Int
   WeaponTypeID: Int
   Character: Character
+  ShipType: Type
+  WeaponType: Type
 }
 
 type KillmailItem {
@@ -45,4 +49,5 @@ type KillmailItem {
   QuantityDestroyed: Int
   QuantityDropped: Int
   Singleton: Int
+  Type: Type
 }
