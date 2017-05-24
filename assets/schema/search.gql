@@ -1,0 +1,52 @@
+type SearchResults {
+	Agents: [Int]
+	Alliances: [AllianceResult]
+	Characters: [CharacterResult]
+	Constellations: [Int]
+	Corporations: [CorporationResult]
+	Factions: [Int]
+	InventoryTypes: [EVETypeResult]
+	Regions: [Int]
+	SolarSystems: [SolarSystemResult]
+	Stations: [Int]
+	Wormholes: [Int]
+}
+
+enum SearchType {
+	AGENT,
+	ALLIANCE,
+	CHARACTER,
+	CONSTELLATION,
+	CORPORATION,
+	FACTION,
+	INVENTORYTYPE,
+	REGION,
+	SOLARSYSTEM,
+	STATION,
+	WORMHOLE
+}
+
+type AllianceResult {
+	AllianceID: Int
+	Alliance: Alliance
+}
+
+type CharacterResult {
+	CharacterID: Int
+	Character: Character
+}
+
+type CorporationResult {
+	CorporationID: Int
+	Corporation: Corporation
+}
+
+type EVETypeResult {
+	TypeID: Int
+	Type: Type
+}
+
+type SolarSystemResult {
+  SystemID: Int
+  System: SolarSystem
+}

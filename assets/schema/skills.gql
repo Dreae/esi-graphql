@@ -1,0 +1,11 @@
+type SkillQueueItem {
+	FinishDate: String
+	FinishedLevel: Int
+	LevelEndSP: Int
+	LevelStartSP: Int
+	QueuePosition: Int
+	SkillID: Int
+	StartDate: String
+	TrainingStartSP: Int
+	Type: Type
+}

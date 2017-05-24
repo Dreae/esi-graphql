@@ -1,0 +1,23 @@
+type SolarSystem {
+  Name: String
+  ConstellationID: Int
+  Planets: [SystemPlanet]
+  Position: Position
+  SecurityClass: String
+  SecurityStatus: Float
+  Stargates: [SystemStargate]
+  SystemID: Int
+}
+
+type SystemPlanet {
+  Moons: [PlanetMoon]
+  PlanetID: Int
+}
+
+type SystemStargate {
+  StargateID: Int
+}
+
+type PlanetMoon {
+  MoonID: Int
+}

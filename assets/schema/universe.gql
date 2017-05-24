@@ -1,0 +1,20 @@
+type Type {
+	TypeID: Int
+	Name: String
+	Description: String
+	Published: Boolean
+	GroupID: Int
+	Radius: Float
+	Volume: Float
+	Capacity: Float
+	PortionSize: Int
+	Mass: Float
+	GraphicID: Int
+	DogmaAttributes: [DogmaAttributeNode]
+}
+
+type Position {
+  X: Float
+  Y: Float
+  Z: Float
+}

@@ -1,0 +1,18 @@
+schema {
+	query: Query
+}
+
+type Query {
+  DogmaAttribute(AttributeID: Int!): DogmaAttribute!
+	DogmaAttributes: [DogmaAttributeNode]
+	Type(TypeID: Int!): Type!
+	Character(CharacterID: Int!): Character!
+	Corporation(CorporationID: Int!): Corporation!
+	Skills(CharacterID: Int!): CharacterSkills!
+	SkillQueue(CharacterID: Int!): [SkillQueueItem]
+	Alliance(AllianceID: Int!): Alliance!
+	Search(SearchTypes: [SearchType]!, Keyword: String!): SearchResults!
+  Structures: [StructureNode]
+  Structure(StructureID: Float!): Structure!
+  SolarSystem(SystemID: Int!): SolarSystem!
+}

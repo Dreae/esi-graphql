@@ -112,7 +112,9 @@ func GetSkillsForCharID(auth string, charID int32) (*CharacterSkillsResolver, er
 		return &CharacterSkillsResolver{&skills}, err
 	}
 
-	json.NewDecoder(resp.Body).Decode(&skills)
+	if err := json.NewDecoder(resp.Body).Decode(&skills); err != nil {
+		return nil, err
+	}
 
 	return &CharacterSkillsResolver{&skills}, nil
 }
@@ -125,10 +127,12 @@ func GetSkillQueueForCharID(auth string, charID int32) (*[]*SkillQueueResolver, 
 		return nil, err
 	}
 
-	json.NewDecoder(resp.Body).Decode(&skillQueue)
+	if err := json.NewDecoder(resp.Body).Decode(&skillQueue); err != nil {
+		return nil, err
+	}
 
 	var resolvers []*SkillQueueResolver
-	for idx, _ := range skillQueue {
+	for idx := range skillQueue {
 		resolvers = append(resolvers, &SkillQueueResolver{&skillQueue[idx]})
 	}
 

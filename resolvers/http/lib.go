@@ -4,10 +4,14 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+
+	"github.com/gregjones/httpcache"
 )
 
 var baseURL = "https://esi.tech.ccp.is/latest/"
 var dataSource = "tranquility"
+
+var client = httpcache.NewMemoryCacheTransport().Client()
 
 func doRequest(method string, auth *string, url string, queryParams *map[string]string, params ...interface{}) (*http.Response, error) {
 	formattedTarget := fmt.Sprintf(url, params...)
@@ -30,7 +34,7 @@ func doRequest(method string, auth *string, url string, queryParams *map[string]
 		req.Header.Set("Authorization", *auth)
 	}
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := client.Do(req)
 
 	if err != nil {
 		return nil, err
@@ -52,14 +56,23 @@ func buildQueryString(params map[string]string) string {
 	return vals.Encode()
 }
 
+// MakeQuery makes requests to ESI endpoints using provided query string parameters
 func MakeQuery(url string, queryParams map[string]string, urlParams ...interface{}) (*http.Response, error) {
 	return doRequest("GET", nil, url, &queryParams, urlParams...)
 }
 
+// MakeRequest requests ESI endpoints using a caching http client
 func MakeRequest(url string, params ...interface{}) (*http.Response, error) {
 	return doRequest("GET", nil, url, nil, params...)
 }
 
+// MakeAuthorizedRequest makes requests for ESI endpoints that require authorization
 func MakeAuthorizedRequest(auth string, url string, params ...interface{}) (*http.Response, error) {
 	return doRequest("GET", &auth, url, nil, params...)
+}
+
+// MakeAuthorizedQuery makes requests to ESI endpoints that require authoirzation using
+// the provided query string parameters
+func MakeAuthorizedQuery(auth string, queryParams map[string]string, url string, urlParams ...interface{}) (*http.Response, error) {
+	return doRequest("GET", &auth, url, &queryParams, urlParams...)
 }

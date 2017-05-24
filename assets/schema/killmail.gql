@@ -1,0 +1,48 @@
+type KillmailNode {
+  KillmailID: Int!
+  KillmailHash: String!
+  Killmail: Killmail
+}
+
+type Killmail {
+  Attackers: [KillmailAttacker]
+  KillmailID: Int!
+  KillmailTime: String!
+  MoonID: Int
+  SolarSystemID: Int!
+  Victim: KillmailVictim
+  WarID: Int
+}
+
+type KillmailVictim {
+  AllianceID: Int
+  CharacterID: Int
+  CorporationID: Int
+  DamageTaken: Int
+  FactionID: Int
+  Position: Position
+  Items: [KillmailItem]
+  ShipTypeID: Int
+}
+
+type KillmailAttacker {
+  AllianceID: Int
+  CharacterID: Int
+  CorporationID: Int
+  DamageDone: Int
+  FactionID: Int
+  FinalBlow: Boolean
+  SecurityStatus: Float
+  ShipTypeID: Int
+  WeaponTypeID: Int
+  Character: Character
+}
+
+type KillmailItem {
+  Flag: Int
+  ItemTypeID: Int
+  Items: [KillmailItem]
+  QuantityDestroyed: Int
+  QuantityDropped: Int
+  Singleton: Int
+}

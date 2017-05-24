@@ -1,0 +1,11 @@
+type Structure {
+  Name: String
+  SolarSystemID: Int
+  TypeID: Int
+  Position: Position
+}
+
+type StructureNode {
+  StructureID: Float
+  Structure: Structure
+}

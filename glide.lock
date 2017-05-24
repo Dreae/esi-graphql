@@ -1,11 +1,12 @@
 hash: de251fd2802d409c824a8d16d45590f27f6202be16d69f1c6d61649a6d8862ce
-updated: 2017-05-18T12:38:01.091137332-04:00
+updated: 2017-05-24T14:13:11.678631622-04:00
 imports:
+- name: github.com/gregjones/httpcache
+  version: 0d2297f241a3503b4d464cd434e6d1490ec76e9a
 - name: github.com/neelance/graphql-go
   version: 5c26f320e3a296c653c6b3763280883cf4e4b416
   subpackages:
   - errors
-  - example/starwars
   - internal/common
   - internal/exec
   - internal/exec/resolvable
@@ -16,7 +17,6 @@ imports:
   - internal/validation
   - introspection
   - log
-  - relay
   - trace
 - name: github.com/opentracing/opentracing-go
   version: eaaf4e1eeb7a5373b38e70901270c83577dc6fb9

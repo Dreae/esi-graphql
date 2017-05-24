@@ -9,20 +9,43 @@ import (
 
 	"context"
 
+	"bytes"
+
 	"github.com/dreae/esi-graphql/resolvers"
 	"github.com/neelance/graphql-go"
 )
 
 var schema *graphql.Schema
 
+func buildSchema() (string, error) {
+	schemaFiles, err := AssetDir("assets/schema")
+	if err != nil {
+		return "", err
+	}
+
+	var buffer bytes.Buffer
+	for _, file := range schemaFiles {
+		contents, err := Asset("assets/schema/" + file)
+		if err != nil {
+			return "", err
+		}
+
+		if _, err := buffer.Write(contents); err != nil {
+			return "", err
+		}
+	}
+
+	return string(buffer.Bytes()), nil
+}
+
 func init() {
 	var err error
-	schemaFile, err := Asset("assets/schema.gql")
+	schemaFile, err := buildSchema()
 	if err != nil {
 		panic(err)
 	}
 
-	schema, err = graphql.ParseSchema(string(schemaFile), &resolvers.Resolver{})
+	schema, err = graphql.ParseSchema(schemaFile, &resolvers.Resolver{})
 	if err != nil {
 		panic(err)
 	}

@@ -1,0 +1,19 @@
+type Alliance {
+	Name: String
+	DateFounded: String
+	ExecutorID: Int
+	Ticker: String
+	Executor: Corporation
+	Members: [AllianceMember]
+	Icons: AllianceIcons
+}
+
+type AllianceMember {
+	CorporationID: Int
+	Corporation: Corporation
+}
+
+type AllianceIcons {
+	LargeIcon: String
+	SmallIcon: String
+}

@@ -1,0 +1,16 @@
+type Corporation {
+	AllianceID: Int
+	CEOID: Int
+	Description: String
+	Name: String
+	CreationDate: String
+	CreatorID: Int
+	Faction: String
+	MemberCount: Int
+	TaxRate: Float
+	Ticker: String
+	URL: String
+	CEO: Character
+	Creator: Character
+	Alliance: Alliance
+}

@@ -1,0 +1,18 @@
+type DogmaAttribute {
+  AttributeID: Int
+	DefaultValue: Int
+	Description: String
+	DisplayName: String
+	HighIsGood: Boolean
+	IconID: Int
+	Name: String
+	Published: Boolean
+	Stackable: Boolean
+	UnitID: Int
+}
+
+type DogmaAttributeNode {
+	AttributeID: Int
+	Value: Float
+	Attribute: DogmaAttribute
+}
