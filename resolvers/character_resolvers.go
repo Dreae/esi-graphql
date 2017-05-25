@@ -100,7 +100,7 @@ func (c *CharacterResolver) SkillQueue(ctx context.Context) (*[]*SkillQueueResol
 	return GetSkillQueueForCharID(ctx.Value(ContextKey("auth")).(string), c.character.CharacterID)
 }
 
-// RecentKillmails fetches the character's recent killmails.
+// Killmails fetches the character's recent killmails.
 // Using this method requires an auth token
 func (c *CharacterResolver) Killmails(ctx context.Context, args *struct{ Before *int32 }) (*[]*KillmailNodeResolver, error) {
 	return GetRecentKillsByCharacter(c.character.CharacterID, ctx.Value(ContextKey("auth")).(string), args.Before)
