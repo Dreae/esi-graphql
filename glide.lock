@@ -1,6 +1,11 @@
 hash: de251fd2802d409c824a8d16d45590f27f6202be16d69f1c6d61649a6d8862ce
-updated: 2017-05-24T14:13:11.678631622-04:00
+updated: 2017-05-25T16:55:52.099753373-04:00
 imports:
+- name: github.com/garyburd/redigo
+  version: 433969511232c397de61b1442f9fd49ec06ae9ba
+  subpackages:
+  - internal
+  - redis
 - name: github.com/gregjones/httpcache
   version: 0d2297f241a3503b4d464cd434e6d1490ec76e9a
 - name: github.com/neelance/graphql-go

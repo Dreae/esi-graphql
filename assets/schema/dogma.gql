@@ -1,6 +1,6 @@
 type DogmaAttribute {
   AttributeID: Int
-	DefaultValue: Int
+	DefaultValue: Float
 	Description: String
 	DisplayName: String
 	HighIsGood: Boolean

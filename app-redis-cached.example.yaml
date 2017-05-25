@@ -1,0 +1,6 @@
+runtime: go
+api_version: go1.8
+env: flex
+env_variables:
+  REDIS_HOST: <redis_url>
+  REDIS_PASS: <optional_redis_pass>

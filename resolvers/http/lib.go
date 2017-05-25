@@ -4,14 +4,12 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-
-	"github.com/gregjones/httpcache"
 )
 
 var baseURL = "https://esi.tech.ccp.is/latest/"
 var dataSource = "tranquility"
 
-var client = httpcache.NewMemoryCacheTransport().Client()
+var client *http.Client
 
 func doRequest(method string, auth *string, url string, queryParams *map[string]string, params ...interface{}) (*http.Response, error) {
 	formattedTarget := fmt.Sprintf(url, params...)

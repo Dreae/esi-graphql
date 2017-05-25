@@ -1,21 +1,21 @@
 package main
 
 import (
+	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 
-	"context"
-
-	"bytes"
-
 	"github.com/dreae/esi-graphql/resolvers"
-	"github.com/neelance/graphql-go"
+	rhttp "github.com/dreae/esi-graphql/resolvers/http"
+	graphql "github.com/neelance/graphql-go"
 )
 
 var schema *graphql.Schema
+var rootDir = "."
 
 func buildSchema() (string, error) {
 	schemaFiles, err := AssetDir("assets/schema")
@@ -49,13 +49,13 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-}
 
-func main() {
 	page, err := Asset("assets/index.html")
 	if err != nil {
 		panic("Could not read index file from ./assets/index.html")
 	}
+
+	rhttp.InitHTTP()
 
 	http.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Write(page)
@@ -84,6 +84,9 @@ func main() {
 
 		w.Write(responseJSON)
 	}))
+}
+
+func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"

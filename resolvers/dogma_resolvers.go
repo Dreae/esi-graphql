@@ -16,7 +16,7 @@ func (a *DogmaAttributeResolver) AttributeID() *int32 {
 }
 
 // DefaultValue returns the dogma attribute's default value
-func (a *DogmaAttributeResolver) DefaultValue() *int32 {
+func (a *DogmaAttributeResolver) DefaultValue() *float64 {
 	return &a.Attribute.DefaultValue
 }
 
@@ -62,16 +62,16 @@ func (a *DogmaAttributeResolver) UnitID() *int32 {
 
 // DogmaAttribute holds the details for an EVE dogma attribute
 type DogmaAttribute struct {
-	AttributeID  int32  `json:"attribute_id"`
-	DefaultValue int32  `json:"default_value"`
-	Description  string `json:"description"`
-	DisplayName  string `json:"display_name"`
-	HighIsGood   bool   `json:"high_is_good"`
-	IconID       int32  `json:"icon_id"`
-	Name         string `json:"name"`
-	Published    bool   `json:"published"`
-	Stackable    bool   `json:"stackable"`
-	UnitID       int32  `json:"unit_id"`
+	AttributeID  int32   `json:"attribute_id"`
+	DefaultValue float64 `json:"default_value"`
+	Description  string  `json:"description"`
+	DisplayName  string  `json:"display_name"`
+	HighIsGood   bool    `json:"high_is_good"`
+	IconID       int32   `json:"icon_id"`
+	Name         string  `json:"name"`
+	Published    bool    `json:"published"`
+	Stackable    bool    `json:"stackable"`
+	UnitID       int32   `json:"unit_id"`
 }
 
 type DogmaAttributeNodeResolver struct {
