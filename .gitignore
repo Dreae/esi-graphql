@@ -1,2 +1,2 @@
 vendor/
-app-redis-cached.yaml
+app-memcached-cached.yaml
