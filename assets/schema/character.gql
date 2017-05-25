@@ -13,7 +13,7 @@ type Character {
 	Alliance: Alliance
 	Skills: CharacterSkills
 	SkillQueue: [SkillQueueItem]
-  RecentKillmails(Before: Int): [KillmailNode]
+  Killmails(Before: Int): [KillmailNode]
 }
 
 type CharacterSkill {
