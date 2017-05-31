@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: esi-graphql-cache
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: esi-graphql-cache
+    spec:
+      containers:
+      - name: esi-graphql-cache
+        image: memcached:alpine
