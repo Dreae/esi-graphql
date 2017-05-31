@@ -1,5 +1,7 @@
 FROM golang:1.8
 
+RUN apt-get update && apt-get -y upgrade
+
 RUN go get -u github.com/Masterminds/glide
 RUN go get -u github.com/jteeuwen/go-bindata/go-bindata
 
