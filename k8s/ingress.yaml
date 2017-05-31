@@ -1,0 +1,11 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: esi-graphql-norules
+spec:
+  # If you're not using SSL this section can be omitted
+  tls:
+    - secretName: esi-graphql-ssl
+  backend:
+    serviceName: esi-graphql-service
+    servicePort: 80

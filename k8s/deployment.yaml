@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: esi-graphql
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: esi-graphql-web
+    spec:
+      containers:
+      - name: esi-graphql-web
+        image: quay.io/dreae/esi-graphql:v1.0

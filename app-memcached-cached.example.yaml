@@ -1,5 +1,0 @@
-runtime: go
-api_version: go1.8
-env: flex
-env_variables:
-  MEMCACHE_URL: <memcache_url>
