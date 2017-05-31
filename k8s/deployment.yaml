@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: esi-graphql-web
-        image: quay.io/dreae/esi-graphql:v1.0.1
+        image: quay.io/dreae/esi-graphql:v1.0.2
         env:
         - name: MEMCACHE_URL
           value: esi-graphql-cache-service:11211
