@@ -1,6 +1,7 @@
 FROM golang:1.8-alpine
 
-RUN apt-get update && apt-get -y upgrade
+RUN apk update && apk upgrade
+RUN apk add git
 
 RUN go get -u github.com/Masterminds/glide
 RUN go get -u github.com/jteeuwen/go-bindata/go-bindata
